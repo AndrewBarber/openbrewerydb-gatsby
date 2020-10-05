@@ -9,6 +9,8 @@ import Sponsorship from './Sponsorship';
 import '../styles.css';
 import config from '../../../config';
 
+import BrewerySearch from '../BrewerySearch';
+
 const ListItem = styled(({ key, to, children }) => (
   <li key={key}>
     <a href={to}>{children}</a>
@@ -134,6 +136,8 @@ const SidebarLayout = () => (
             );
           })}
         </ul>
+        <BrewerySearch />
+        <Divider />
         <NewsletterSignup />
         <Divider />
         <SidebarSocial />
