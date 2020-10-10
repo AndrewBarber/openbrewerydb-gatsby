@@ -2,6 +2,7 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { debounce } from 'throttle-debounce';
 import styled from '@emotion/styled-base';
+import Brewery from './Brewery';
 
 const API_SERVER_HOST =
   process.env.REACT_APP_API_SERVER_HOST || 'https://api.openbrewerydb.org';
@@ -9,7 +10,7 @@ const API_SERVER_HOST =
 const getSuggestionValue = suggestion => suggestion.name;
 
 const renderSuggestion = suggestion => (
-  <div className="text-lg p-4">{suggestion.name}</div>
+  <div className="brewerySearchSuggestion">{suggestion.name}</div>
 );
 
 const BrewerySearchContainer = styled('div')`
@@ -44,7 +45,7 @@ const BrewerySearch = () => {
 
   const debouncedGetSuggestions = debounce(500, getSuggestions);
 
-  const onChange = (event, { newValue }) => {
+  const onChange = (_event, { newValue }) => {
     console.log(newValue);
     setQuery(newValue);
   };
@@ -58,7 +59,6 @@ const BrewerySearch = () => {
       );
       const payload = await request.json();
       setBrewery(payload);
-      console.log(payload);
     } catch (e) {
       console.error(e);
       alert(
@@ -66,6 +66,7 @@ const BrewerySearch = () => {
       );
     }
   };
+
   const onSuggestionsFetchRequested = ({ value }) => {
     debouncedGetSuggestions(value);
   };
@@ -78,8 +79,6 @@ const BrewerySearch = () => {
     placeholder: 'Type a brewery name',
     onChange,
     value: query,
-    className:
-      'shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline mb-4',
   };
 
   return (
@@ -96,7 +95,7 @@ const BrewerySearch = () => {
         onSuggestionSelected={onSuggestionSelected}
       />
 
-      {/* <Brewery brewery={brewery} /> */}
+      <Brewery brewery={brewery} />
     </BrewerySearchContainer>
   );
 };
